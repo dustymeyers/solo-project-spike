@@ -8,6 +8,8 @@ function Classes() {
   // const classesList = useStore(store => store.classesList);
 
   const [classesList, setClassesList] = useState([]);
+  const [chosenClass, setChosenClass] = useState(0);
+
   console.log(classesList);
 
   useEffect(() => {
@@ -18,12 +20,17 @@ function Classes() {
 
         setClassesList(results.data);
       })
-      .catch(err => console.log('error getting classes'));
+      .catch(err => console.log('error getting classes', err));
   }, []);
+
+  const chooseClass = () => {
+    console.log(chosenClass);
+    
+  }
 
   return (
     <>
-      <select>
+      <select onChange={event => setChosenClass(event.target.value)}>
         {classesList.length ?
           classesList.map(characterClass => {
             console.log(characterClass);
@@ -32,6 +39,7 @@ function Classes() {
             </option>)
           }) : <option>No classes</option>}
       </select>
+      <button onClick={chooseClass}>Select</button>
     </>
   )
 } // end Classes

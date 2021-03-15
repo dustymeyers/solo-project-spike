@@ -22,11 +22,30 @@ const router = express.Router();
     })
 });
 
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
-  // POST route code here
+router.get('/:id', (req, res) => {
+  
+  const queryText =`
+    SELECT 
+      "classes".class_name, 
+      "features".feature_name,
+      "features".feature_description
+    FROM "classes" 
+    JOIN "classes_features"
+      ON "classes".id = "classes_features".class_id
+    JOIN "features"
+      ON "classes_features".feature_id = "features".id
+    WHERE "classes".id = $1;
+  `;
+
+  pool
+    .query(queryText, [req.params.id])
+    .then(dbRes => {
+      console.log('Got class info from DB', dbRes);
+      res.send(dbRes.rows);
+    }).catch(err => {
+      console.log('Error getting class info', err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
