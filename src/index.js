@@ -4,9 +4,31 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 
+// redux
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import logger from 'redux-logger';
+
+const classesList = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_CLASSES':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+const store = createStore(combineReducers({
+  classesList
+}),
+  applyMiddleware(logger));
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

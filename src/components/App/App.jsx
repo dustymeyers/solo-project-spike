@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { HashRouter as Router, Route, Link, useHistory, } from 'react-router-dom';
 
 // components
+import Classes from '../Classes/Classes'
 import Home from '../Home/Home';
 
 // style sheet
@@ -30,7 +31,7 @@ function App() {
         </Route>
 
         <Route path="/classes">
-          Classes
+          <Classes />
         </Route>
       </Router>
 
